@@ -2,17 +2,17 @@
   <div id="app">
     <img src="./assets/ust.jpeg">
     <h1> Juego de palabras encadenadas mediante una DApp </h1>
-    <HelloWorld/>
+    <PalabrasEncadenadas/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import PalabrasEncadenadas from './components/PalabrasEncadenadas'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    PalabrasEncadenadas
   }
 }
 </script>

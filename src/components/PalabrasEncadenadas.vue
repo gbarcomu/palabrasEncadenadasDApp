@@ -1,16 +1,16 @@
 <template>
-  <div class="hello">
-    <h1>{{ currentWord }}</h1>
-    <h2>Essential Links</h2>
-<button v-on:click="callContract">Call</button>
+  <div>
+    <h2>Palabra actual: {{ currentWord }}</h2>
+    <button v-on:click="callContract">Obtener palabra</button>
+<h3>Introduce una palabra cuya primera letra sea la última de la palabra actual</h3>
 <input v-model="newWord" placeholder="nueva palabra">
-<button v-on:click="sendContract">Send</button>
+<button v-on:click="sendContract">Enviar nueva palabra</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "PalabrasEncadenadas",
   data() {
     return {
       currentWord: "",
@@ -31,15 +31,14 @@ export default {
               {
                 name: "nuevaPalabra",
                 type: "string"
+              },
+              {
+                name: "nuevaUltimaLetra",
+                type: "string"
               }
             ],
             name: "setNuevaPalabra",
-            outputs: [
-              {
-                name: "",
-                type: "bool"
-              }
-            ],
+            outputs: [],
             payable: false,
             stateMutability: "nonpayable",
             type: "function"
@@ -65,7 +64,7 @@ export default {
             type: "function"
           }
         ],
-        "0xb702142943e6065630cd7015e544f7acd37b397b"
+        "0x5cfe554c5ae9b887499f0531c8c745536864dda8"
       );
 
       contractFactory.methods["getPalabra"]()
@@ -88,15 +87,14 @@ export default {
               {
                 name: "nuevaPalabra",
                 type: "string"
+              },
+              {
+                name: "nuevaUltimaLetra",
+                type: "string"
               }
             ],
             name: "setNuevaPalabra",
-            outputs: [
-              {
-                name: "",
-                type: "bool"
-              }
-            ],
+            outputs: [],
             payable: false,
             stateMutability: "nonpayable",
             type: "function"
@@ -122,17 +120,24 @@ export default {
             type: "function"
           }
         ],
-        "0xb702142943e6065630cd7015e544f7acd37b397b"
+        "0x5cfe554c5ae9b887499f0531c8c745536864dda8"
       );
 
-      contractFactory.methods["setNuevaPalabra"](this.newWord[0], this.newWord)
+      contractFactory.methods["setNuevaPalabra"](
+        this.newWord[0],
+        this.newWord,
+        this.newWord[this.newWord.length - 1]
+      )
         .send({ from: "0x29577899A8c5A8c4352737f3CC09c7627F6c3101" })
         .then(result => {
-          if (this.newWord[0] == this.currentWord[this.currentWord.length - 1]) {
+          if (
+            this.newWord[0] == this.currentWord[this.currentWord.length - 1]
+          ) {
             this.currentWord = this.newWord;
-          }
-          else {
-            alert("La primera letra de la última palabra no coincide con la anterior");
+          } else {
+            alert(
+              "La primera letra de la última palabra no coincide con la anterior"
+            );
           }
         });
     }
@@ -156,5 +161,18 @@ li {
 }
 a {
   color: #42b983;
+}
+
+button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 </style>

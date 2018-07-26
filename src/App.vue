@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img src="./assets/ust.jpeg">
+    <h1> Juego de palabras encadenadas mediante una DApp </h1>
     <HelloWorld/>
   </div>
 </template>

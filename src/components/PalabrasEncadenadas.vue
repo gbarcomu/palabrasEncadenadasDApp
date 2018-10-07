@@ -9,6 +9,9 @@
 </template>
 
 <script>
+
+import ethConfig from '../../config/ethConfig.js'
+
 export default {
   name: "PalabrasEncadenadas",
   data() {
@@ -19,56 +22,16 @@ export default {
   },
   methods: {
     callContract() {
+
+      console.log(web3.eth.accounts);
+
       var contractFactory = new web3.eth.Contract(
-        [
-          {
-            constant: false,
-            inputs: [
-              {
-                name: "primeraLetra",
-                type: "string"
-              },
-              {
-                name: "nuevaPalabra",
-                type: "string"
-              },
-              {
-                name: "nuevaUltimaLetra",
-                type: "string"
-              }
-            ],
-            name: "setNuevaPalabra",
-            outputs: [],
-            payable: false,
-            stateMutability: "nonpayable",
-            type: "function"
-          },
-          {
-            inputs: [],
-            payable: false,
-            stateMutability: "nonpayable",
-            type: "constructor"
-          },
-          {
-            constant: true,
-            inputs: [],
-            name: "getPalabra",
-            outputs: [
-              {
-                name: "",
-                type: "string"
-              }
-            ],
-            payable: false,
-            stateMutability: "view",
-            type: "function"
-          }
-        ],
-        "0x5cfe554c5ae9b887499f0531c8c745536864dda8"
+        ethConfig.CONTRACT_ABI,
+        ethConfig.CONTRACT_ADDRESS
       );
 
       contractFactory.methods["getPalabra"]()
-        .call({ from: "0x29577899A8c5A8c4352737f3CC09c7627F6c3101" })
+        .call({ from: ethConfig.ACCOUNT_ADDRESS })
         .then(result => {
           this.currentWord = result;
         });
@@ -76,51 +39,8 @@ export default {
 
     sendContract() {
       var contractFactory = new web3.eth.Contract(
-        [
-          {
-            constant: false,
-            inputs: [
-              {
-                name: "primeraLetra",
-                type: "string"
-              },
-              {
-                name: "nuevaPalabra",
-                type: "string"
-              },
-              {
-                name: "nuevaUltimaLetra",
-                type: "string"
-              }
-            ],
-            name: "setNuevaPalabra",
-            outputs: [],
-            payable: false,
-            stateMutability: "nonpayable",
-            type: "function"
-          },
-          {
-            inputs: [],
-            payable: false,
-            stateMutability: "nonpayable",
-            type: "constructor"
-          },
-          {
-            constant: true,
-            inputs: [],
-            name: "getPalabra",
-            outputs: [
-              {
-                name: "",
-                type: "string"
-              }
-            ],
-            payable: false,
-            stateMutability: "view",
-            type: "function"
-          }
-        ],
-        "0x5cfe554c5ae9b887499f0531c8c745536864dda8"
+        ethConfig.CONTRACT_ABI,
+        ethConfig.CONTRACT_ADDRESS
       );
 
       contractFactory.methods["setNuevaPalabra"](
@@ -128,7 +48,7 @@ export default {
         this.newWord,
         this.newWord[this.newWord.length - 1]
       )
-        .send({ from: "0x29577899A8c5A8c4352737f3CC09c7627F6c3101" })
+        .send({ from: ethConfig.ACCOUNT_ADDRESS })
         .then(result => {
           if (
             this.newWord[0] == this.currentWord[this.currentWord.length - 1]
@@ -145,7 +65,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
 h2 {

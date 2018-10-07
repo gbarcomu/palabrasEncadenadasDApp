@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/ust.jpeg">
+    <img src="./assets/kschool.png">
     <h1> Juego de palabras encadenadas mediante una DApp </h1>
     <PalabrasEncadenadas/>
   </div>

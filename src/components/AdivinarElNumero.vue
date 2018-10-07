@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button v-on:click="callContract">Generar nuevo número</button>
+    <button v-on:click="sendContract">Generar nuevo número</button>
 <h3>Introduce un número entre el 0 y el 4 y comprueba si has acertado el número secreto</h3>
 <input v-model="numero" placeholder="introduce un número">
-<button v-on:click="sendContract">Enviar el número</button>
+<button v-on:click="callContract">Enviar el número</button>
   </div>
 </template>
 
@@ -19,11 +19,11 @@ export default {
   },
   methods: {
     callContract() {
-      alert("Nuevo número generado");
+      alert("Número incorrecto");
     },
 
     sendContract() {
-      alert("Número incorrecto");
+      alert("Nuevo número generado");
     }
   }
 };

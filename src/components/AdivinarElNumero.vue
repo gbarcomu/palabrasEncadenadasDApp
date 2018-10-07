@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button v-on:click="callContract">Generar nuevo número</button>
+    <button v-on:click="sendContract">Generar nuevo número</button>
 <h3>Introduce un número entre el 0 y el 4 y comprueba si has acertado el número secreto</h3>
 <input v-model="numero" placeholder="introduce un número">
-<button v-on:click="sendContract">Enviar el número</button>
+<button v-on:click="callContract">Enviar el número</button>
   </div>
 </template>
 
@@ -19,11 +19,30 @@ export default {
   },
   methods: {
     callContract() {
-      alert("Nuevo número generado");
+      let contractFactory = new web3.eth.Contract(
+        ethConfig.CONTRACT_ABI_NUMEROS,
+        ethConfig.CONTRACT_ADDRESS_NUMEROS
+      );
+      contractFactory.methods["guessNumber"](this.numero)
+        .call({ from: ethConfig.ACCOUNT_ADDRESS })
+        .then(result => {
+          alert(result ? "Número correcto" : "Número incorrecto");
+        });
     },
 
     sendContract() {
-      alert("Número incorrecto");
+      let contractFactory = new web3.eth.Contract(
+        ethConfig.CONTRACT_ABI_NUMEROS,
+        ethConfig.CONTRACT_ADDRESS_NUMEROS
+      );
+
+      contractFactory.methods["resetNumber"](
+        Math.floor(Math.random() * 100 + 1)
+      )
+        .send({ from: ethConfig.ACCOUNT_ADDRESS })
+        .then(result => {
+          alert("Nuevo número generado");
+        });
     }
   }
 };

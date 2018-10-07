@@ -2,9 +2,9 @@
   <div>
     <h2>Palabra actual: {{ currentWord }}</h2>
     <button v-on:click="callContract">Obtener palabra</button>
-<h3>Introduce una palabra cuya primera letra sea la última de la palabra actual</h3>
-<input v-model="newWord" placeholder="nueva palabra">
-<button v-on:click="sendContract">Enviar nueva palabra</button>
+    <h3>Introduce una palabra cuya primera letra sea la última de la palabra actual</h3>
+    <input v-model="newWord" placeholder="nueva palabra">
+    <button v-on:click="sendContract">Enviar nueva palabra</button>
   </div>
 </template>
 
@@ -22,12 +22,9 @@ export default {
   },
   methods: {
     callContract() {
-
-      console.log(web3.eth.accounts);
-
-      var contractFactory = new web3.eth.Contract(
-        ethConfig.CONTRACT_ABI,
-        ethConfig.CONTRACT_ADDRESS
+      let contractFactory = new web3.eth.Contract(
+        ethConfig.CONTRACT_ABI_PALABRAS,
+        ethConfig.CONTRACT_ADDRESS_PALABRAS
       );
 
       contractFactory.methods["getPalabra"]()
@@ -38,9 +35,9 @@ export default {
     },
 
     sendContract() {
-      var contractFactory = new web3.eth.Contract(
-        ethConfig.CONTRACT_ABI,
-        ethConfig.CONTRACT_ADDRESS
+      let contractFactory = new web3.eth.Contract(
+        ethConfig.CONTRACT_ABI_PALABRAS,
+        ethConfig.CONTRACT_ADDRESS_PALABRAS
       );
 
       contractFactory.methods["setNuevaPalabra"](
